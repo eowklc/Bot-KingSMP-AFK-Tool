@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KingSMP Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-copy"><strong>KingSMP</strong><span>BOT PANEL</span></div>
+      <button class="icon-button" id="sidebar-collapse" type="button" aria-label="Thu gọn thanh bên" aria-expanded="true" title="Thu gọn thanh bên">☰</button>
+    </div>
+    <div class="nav-caption">WORKSPACE</div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" type="button" data-page="accounts"><span class="nav-icon">◫</span><span class="nav-label">Tài khoản</span></button>
+      <button class="nav-item" type="button" data-page="logs"><span class="nav-icon">≋</span><span class="nav-label">Log</span></button>
+      <button class="nav-item" type="button" data-page="bot-vision"><span class="nav-icon">◉</span><span class="nav-label">Bot Vision</span></button>
+      <button class="nav-item" type="button" data-page="proxy"><span class="nav-icon">⇄</span><span class="nav-label">API Proxy</span></button>
+    </nav>
+    <div class="sidebar-spacer"></div>
+    <div class="sidebar-footer">
+      <span class="connection-dot online" id="sidebar-connection-dot"></span>
+      <div class="sidebar-footer-copy"><strong id="sidebar-connection-text">Panel online</strong><span>!</span></div>
+    </div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="breadcrumb"><span>KingSMP</span><span class="breadcrumb-slash">/</span><strong id="page-breadcrumb">Tài khoản</strong></div>
+        <div class="page-heading"><h1 id="page-title">Tài khoản</h1><p id="page-description">Quản lý danh sách bot đa tài khoản.</p></div>
+      </div>
+      <div class="topbar-actions"><button class="icon-button" id="theme-toggle" type="button"><span id="theme-icon">☀</span></button></div>
+    </header>
+
+    <section class="page-view active" id="page-accounts" data-page-view="accounts">
+      <div class="panel">
+        <div class="panel-heading"><div><h2>Thêm tài khoản</h2><p>Username + password + proxy (tùy chọn)</p></div></div>
+        <form id="add-form" class="add-form">
+          <input id="acc-username" placeholder="Tên acc Minecraft" required>
+          <input id="acc-password" placeholder="Mật khẩu" required>
+          <input id="acc-proxy" placeholder="Proxy ( Tuỳ chọn )">
+          <button type="submit" class="primary-button">Thêm & Chạy</button>
+        </form>
+      </div>
+      <div class="panel">
+        <div class="panel-heading"><div><h2>Broadcast</h2><p>Gửi lệnh cho tất cả bot online</p></div></div>
+        <div class="broadcast-row">
+          <input id="broadcast-input" placeholder="Ví dụ: /spawn, afk, menu...">
+          <button id="broadcast-btn" type="button" class="primary-button">Gửi</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-heading"><div><h2>Danh sách tài khoản</h2><p id="acc-count">0 acc</p></div></div>
+        <div id="accounts-list" class="accounts-list"></div>
+      </div>
+    </section>
+
+    <section class="page-view" id="page-logs" data-page-view="logs">
+      <div class="panel log-panel">
+        <div class="panel-heading"><div><h2>Live Log</h2><p>Chọn tab bot để xem log riêng.</p></div>
+          <div class="heading-actions"><span class="live-indicator"><i></i> LIVE</span><button class="small-button" id="clear-logs" type="button">Xóa log đang xem</button></div>
+        </div>
+        <div class="log-tabs" id="log-account-tabs" role="tablist" aria-label="Chọn log bot"></div>
+        <div class="log-toolbar"><span class="filter-label">LOG</span><span class="log-count" id="log-count">0 dòng</span><span class="log-tip">Log.</span></div>
+        <div class="log-stream" id="log-container" role="log" aria-live="polite"><div class="empty-state">Đang chờ dữ liệu từ bot...</div></div>
+        <form class="log-command-form" id="log-command-form">
+          <span class="command-prefix">›_</span>
+          <select id="log-command-target" aria-label="Bot nhận lệnh" required><option value="">Chọn bot nhận lệnh…</option><option value="*">Tất cả bot đang online</option></select>
+          <input id="log-command-input" type="text" placeholder="Nhập lệnh hoặc chat, ví dụ /help, afk, menu…" autocomplete="off" aria-label="Nội dung lệnh">
+          <button type="submit" class="primary-button">Gửi lệnh <span>↗</span></button>
+        </form>
+        <div class="panel-bottom-note">Made by minh.taybe</div>
+      </div>
+    </section>
+
+    <section class="page-view" id="page-bot-vision" data-page-view="bot-vision">
+      <div class="panel">
+        <label class="field-label">Chọn tài khoản</label>
+        <select id="vision-acc-select" class="text-field"><option value="">-- Chọn bot để xem  --</option></select>
+      </div>
+      <div class="vision-grid">
+        <section class="panel vision-panel">
+          <div class="panel-heading vision-heading">
+            <div><h2>Góc nhìn bot</h2><p id="vision-status-text">Chọn bot để bắt đầu</p></div>
+            <div class="heading-actions vision-actions">
+              <span class="live-indicator"><i></i> <span id="vision-live-label">LIVE</span></span>
+              <button class="small-button" id="vision-minilog-toggle" type="button" title="Mở log nhanh (M)">≋ Log</button>
+              <button class="small-button coords-toggle" id="vision-coords-toggle" type="button">◌ Ẩn tọa độ</button>
+              <button class="small-button" id="vision-pause" type="button">Tạm dừng</button>
+              <button class="small-button" id="vision-fullscreen" type="button">Toàn màn hình</button>
+            </div>
+          </div>
+          <div class="vision-stage" id="vision-stage" data-effect="normal" tabindex="0" aria-label="Khung nhìn Minecraft. Kéo để xoay camera, cuộn để zoom.">
+            <canvas id="vision-canvas" width="256" height="144"></canvas>
+            <canvas id="vision-overlay" width="256" height="144"></canvas>
+            <div class="vision-hud">
+              <span class="hud-chip mono coord-sensitive" id="vision-chip-pos">—</span>
+              <span class="hud-chip" id="vision-chip-facing">—</span>
+            </div>
+            <div class="vision-hint">Kéo để xoay · Cuộn để thu phóng · M: mở log nhanh · Esc: thoát ô nhập</div>
+            <div class="minilog" id="minilog" hidden>
+              <div class="minilog-resize" id="minilog-resize" title="Kéo để đổi kích thước · nhấp đúp để đặt lại"></div>
+              <div class="minilog-header">
+                <span class="minilog-title">≋ Log nhanh · <strong id="minilog-bot-name">Bot</strong></span>
+                <div class="minilog-tools">
+                  <button type="button" id="minilog-scale-down" aria-label="Thu nhỏ chữ" title="Thu nhỏ chữ (Ctrl + cuộn)">A−</button>
+                  <span class="minilog-scale-label" id="minilog-scale-label">100%</span>
+                  <button type="button" id="minilog-scale-up" aria-label="Phóng to chữ" title="Phóng to chữ (Ctrl + cuộn)">A+</button>
+                  <button type="button" id="minilog-close" aria-label="Đóng log nhanh" title="Đóng (M)">×</button>
+                </div>
+              </div>
+              <div class="minilog-stream" id="minilog-stream" role="log" aria-live="polite"></div>
+              <form class="minilog-form" id="minilog-form"><span>›_</span><input id="minilog-input" type="text" placeholder="Nhập lệnh… nhấn Enter để gửi" autocomplete="off"><button type="submit">Gửi</button></form>
+            </div>
+            <div class="vision-placeholder" id="vision-placeholder"><span id="vision-placeholder-text">Chọn bot ở phía trên để xem.</span></div>
+          </div>
+        </section>
+        <aside class="panel vision-side">
+          <div class="panel-heading"><div><h2>Tùy chỉnh</h2><p>Thiết lập cho bot hiện tại</p></div></div>
+          <label class="field-label" for="vision-mode">Camera</label>
+          <div class="segmented" id="vision-mode">
+            <button type="button" class="active" data-vision-mode="bot">Theo bot</button>
+            <button type="button" data-vision-mode="free">Freecam</button>
+          </div>
+          <label class="field-label" for="vision-quality">Chất lượng dựng hình</label>
+          <select class="text-field" id="vision-quality">
+            <option value="low">Thấp</option>
+            <option value="medium" selected>Vừa</option>
+            <option value="high">Cao</option>
+          </select>
+          <label class="field-label" for="vision-effect">Hiệu ứng hình ảnh</label>
+          <select class="text-field" id="vision-effect">
+            <option value="normal">Mặc định</option>
+            <option value="night">Mode thắng ngọt</option>
+            <option value="thermal">Mode do thái</option>
+            <option value="gray">Mode Minecraft 1990</option>
+            <option value="retro">Mode Minecraft Nintendo</option>
+            <option value="vivid">Mode Scratch</option>
+            <option value="dream">Mode Tôi là hoa</option>
+          </select>
+          <div class="vision-fov-control">
+            <label class="field-label" for="vision-fov">FOV <span class="field-value mono" id="vision-fov-value">70°</span></label>
+            <input class="range-field" type="range" id="vision-fov" min="40" max="110" value="70" step="1">
+          </div>
+          <div class="vision-fov-control">
+            <label class="field-label" for="vision-chunks">Tầm nhìn bot <span class="field-value mono" id="vision-chunks-value">3 chunk</span></label>
+            <input class="range-field" type="range" id="vision-chunks" min="2" max="5" value="3" step="1">
+            <div class="range-ticks mono"><span>2</span><span>3</span><span>4</span><span>5</span></div>
+          </div>
+          <label class="check-row"><input type="checkbox" id="vision-names" checked><span>Hiện tên entity / item <small>(trong 3 chunk)</small></span></label>
+          <label class="check-row"><input type="checkbox" id="vision-entity-coords"><span>Hiện toạ độ thực thể<small>(XYZ)</small></span></label>
+          <div class="vision-info">
+            <div class="info-row"><span>Vị trí</span><strong class="coord-sensitive" id="vision-info-pos">—</strong></div>
+            <div class="info-row"><span>Chunk</span><strong class="coord-sensitive" id="vision-info-chunk">—</strong></div>
+            <div class="info-row"><span>Entity · Item</span><strong id="vision-info-entities">—</strong></div>
+            <div class="info-row"><span>Máu · Đói</span><strong id="vision-info-vitals">—</strong></div>
+            <div class="info-row"><span>Hiệu năng</span><strong id="vision-info-fps">—</strong></div>
+          </div>
+          <div class="vision-legend"><span><i class="legend-player"></i>Người chơi</span><span><i class="legend-hostile"></i>Quái</span><span><i class="legend-passive"></i>Động vật</span><span><i class="legend-item"></i>Vật phẩm</span></div>
+          <p class="notice-text">Mỗi bot có thể được chọn riêng từ thẻ tài khoản. Chỉ có thể xem khi trang đang mở và chưa tạm dừng.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="page-view" id="page-proxy" data-page-view="proxy">
+      <div class="panel proxy-panel">
+        <div class="panel-heading"><div><h2>API Proxy</h2><p>Kiểm tra kết nối proxy và xem IP public</p></div></div>
+        <label class="field-label" for="proxy-url">Proxy URL</label>
+        <input class="text-field mono" id="proxy-url" placeholder="http://host:port hoặc socks5://host:port">
+        <div class="proxy-actions">
+          <button class="primary-button" id="test-proxy" type="button">Test Proxy</button>
+          <button class="secondary-button" id="check-ip" type="button">Check IP trực tiếp</button>
+          <button class="danger-button" id="stop-proxy" type="button" disabled>Stop</button>
+        </div>
+        <div class="proxy-status-box" id="proxy-status-box">
+          <strong id="proxy-status-title">Chưa kiểm tra</strong>
+          <p id="proxy-status-message">Nhập proxy rồi bấm Test Proxy.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="app-footer"><span>© KingSMP Panel</span><span>Mineflayer multi-account</span></footer>
+  </main>
+</div>
+<div class="toast-stack" id="toast-stack"></div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/app.js"></script>
+<script src="/vision.js"></script>
+</body>
+</html>

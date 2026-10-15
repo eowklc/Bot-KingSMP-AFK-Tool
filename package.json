@@ -1,0 +1,17 @@
+{
+  "name": "kingsmp-panel",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5",
+    "mineflayer": "^4.20.0",
+    "minecraft-data": "^3.65.0",
+    "socks-proxy-agent": "^8.0.4",
+    "https-proxy-agent": "^7.0.5",
+    "socks": "^2.8.3"
+  }
+}

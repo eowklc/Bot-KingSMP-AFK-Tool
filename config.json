@@ -1,0 +1,26 @@
+{
+  "webPort": 3001,
+  "server": {
+    "host": "kingmc.vn",
+    "port": 25565,
+    "version": "1.21.1"
+  },
+  "defaultLoginCommand": "/login {password}",
+  "menuSlot": 24,
+  "menuDelayMs": 2500,
+  "enterDelayMs": 3000,
+  "afkIntervalMs": 300000,
+  "vision": {
+    "radius": 22,
+    "below": 12,
+    "above": 12,
+    "stateMs": 100,
+    "worldMs": 500,
+    "entityRange": 48,
+    "maxEntities": 96,
+    "minChunks": 2,
+    "maxChunks": 5,
+    "defaultChunks": 3
+  },
+  "viewDistance": 7
+}
