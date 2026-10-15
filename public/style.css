@@ -285,3 +285,68 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .check-row { display: flex; align-items: flex-start; gap: 9px; margin: 10px 0; font-size: 12px; cursor: pointer; line-height: 1.35; }
 .check-row input { margin-top: 2px; accent-color: var(--accent); cursor: pointer; }
 .check-row small { color: var(--muted); font-size: 11px; }
+
+/* ===== Mobile: điều hướng dưới đáy, bố cục một cột ===== */
+@media (max-width: 760px) {
+  :root { --sidebar-width: 0px; }
+  html, body { overflow-x: hidden; }
+  .app-shell { height: 100vh; height: 100dvh; display: block; }
+
+  /* Sidebar thành thanh tab cố định ở đáy */
+  .sidebar, body.sidebar-collapsed .sidebar {
+    top: auto; right: 0; left: 0; bottom: 0; width: 100%; height: auto;
+    flex-direction: column; padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+    border-right: 0; border-top: 1px solid var(--border);
+    background: var(--surface); z-index: 50;
+  }
+  .sidebar-brand, .nav-caption, .sidebar-spacer, .sidebar-footer, #sidebar-collapse { display: none !important; }
+  .sidebar-nav, body.sidebar-collapsed .sidebar-nav { flex-direction: row; gap: 2px; width: 100%; }
+  body.sidebar-collapsed .nav-item { justify-content: center; padding: 0 4px; }
+  .nav-item, body.sidebar-collapsed .nav-item {
+    flex: 1; flex-direction: column; justify-content: center; gap: 2px;
+    min-height: 52px; padding: 4px 2px; font-size: 10px; text-align: center; min-width: 0;
+  }
+  .nav-icon { width: auto; font-size: 18px; line-height: 1; }
+  body.sidebar-collapsed .nav-label { display: block !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+
+  /* Vùng nội dung chiếm toàn màn hình, chừa chỗ cho thanh tab */
+  .main-area, body.sidebar-collapsed .main-area {
+    width: 100%; margin-left: 0; height: 100vh; height: 100dvh;
+    padding: calc(env(safe-area-inset-top, 0px) + 0px) 12px calc(78px + env(safe-area-inset-bottom, 0px));
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Topbar gọn */
+  .topbar { padding: 12px 0; margin-bottom: 14px; align-items: flex-start; gap: 10px; }
+  .breadcrumb { display: none; }
+  .page-heading h1 { font-size: 19px; }
+  .page-heading p { font-size: 11px; }
+  .panel { padding: 14px; border-radius: 11px; }
+  .panel-heading { flex-wrap: wrap; gap: 8px; }
+
+  /* Ô nhập: 16px để iPhone không tự zoom */
+  input, select, textarea, .text-field { font-size: 16px !important; }
+  .primary-button, .small-button { min-height: 40px; }
+  .small-button { padding: 0 10px; }
+  .heading-actions { flex-wrap: wrap; gap: 6px; }
+  .log-toolbar { flex-wrap: wrap; gap: 6px; }
+
+  /* Vision */
+  .vision-stage { min-height: 300px; height: 52vh; }
+  .vision-hint { display: none; }
+  .vision-actions { flex-wrap: wrap; gap: 6px; }
+  .vision-actions .small-button { flex: 1 1 auto; }
+  .vision-heading { flex-wrap: wrap; gap: 8px; }
+
+  /* Log nhanh: thành bảng nổi phía dưới, rộng cả màn hình */
+  .minilog {
+    left: 6px; right: 6px; bottom: 6px; width: auto;
+    height: min(55%, 360px); max-width: none;
+  }
+  .minilog-resize { display: none; }
+
+  /* Log trang chính */
+  .log-stream { max-height: 55vh; }
+  .log-tabs { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+  .log-tabs > * { flex: 0 0 auto; }
+}
